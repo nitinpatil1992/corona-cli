@@ -18,6 +18,7 @@ module.exports = meow(
 	  ${yellow(`--sort`)}, ${yellow(`-s`)}           Sort data by type
 	  ${yellow(`--reverse`)}, ${yellow(`-r`)}        Reverse print order
 	  ${yellow(`--limit`)}, ${yellow(`-l`)}          Print only N entries
+	  ${yellow(`--date`)}, ${yellow(`-d`)}           Print report for particular date
 
 	Examples
 	  ${green(`corona`)} ${cyan(`china`)}
@@ -58,6 +59,11 @@ module.exports = meow(
 				type: 'boolean',
 				default: false,
 				alias: 'm'
+			},
+			date: {
+				type: 'string',
+				default: new Date().toISOString().slice(0,10).replace(/-/g,''),
+				alias: 'd'
 			}
 		}
 	}

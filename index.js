@@ -18,6 +18,8 @@ const getStates = require('./utils/getStates.js');
 const getCountry = require('./utils/getCountry.js');
 const getWorldwide = require('./utils/getWorldwide.js');
 const getCountries = require('./utils/getCountries.js');
+const validateOptions = require('./utils/validateOptions');
+const commonUtils = require('./utils/commonUtils');
 const {
 	style,
 	single,
@@ -31,13 +33,18 @@ const sortBy = cli.flags.sort;
 const reverse = cli.flags.reverse;
 const limit = Math.abs(cli.flags.limit);
 const minimal = cli.flags.minimal;
-const options = { sortBy, limit, reverse, minimal };
-
+const date = cli.flags.date;
+const options = { sortBy, limit, reverse, minimal, date};
+const flagValidation = validateOptions(cli.flags);
 (async () => {
 	// Init.
 	init(minimal);
 	const [input] = cli.input;
 	input === 'help' && (await cli.showHelp(0));
+	if (flagValidation.status) {
+		commonUtils.throwError({type: flagValidation.type, message: flagValidation.error})
+		await cli.showHelp(0);
+	}
 	const states = input === 'states' ? true : false;
 	const country = input;
 
