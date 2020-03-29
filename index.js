@@ -34,7 +34,7 @@ const reverse = cli.flags.reverse;
 const limit = Math.abs(cli.flags.limit);
 const date = cli.flags.date;
 const minimal = cli.flags.minimal;
-const options = { sortBy, limit, reverse, date, minimal};
+const options = { sortBy, limit, reverse, date, minimal };
 const flagValidation = validateOptions(cli.flags);
 (async () => {
 	// Init.
@@ -42,7 +42,10 @@ const flagValidation = validateOptions(cli.flags);
 	const [input] = cli.input;
 	input === 'help' && (await cli.showHelp(0));
 	if (flagValidation.status) {
-		commonUtils.throwError({type: flagValidation.type, message: flagValidation.error});
+		commonUtils.throwError({
+			type: flagValidation.type,
+			message: flagValidation.error
+		});
 		await cli.showHelp(0);
 	}
 	const states = input === 'states' ? true : false;
